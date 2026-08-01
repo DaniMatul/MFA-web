@@ -1,0 +1,20 @@
+.mfa-general-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 100%;
+    margin: 0 20px;
+}
+.img-container{
+    width: 60%;
+    margin:  0 0 0 80px;
+}
+
+img{
+    width: 250px;
+}
+
+.inputs-container{
+    width: 80%;
+}
