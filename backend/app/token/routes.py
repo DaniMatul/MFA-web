@@ -11,7 +11,8 @@ async def sendSms():
     rersult = sendVerificationCode()
     return rersult
 
-@router.post("/validate-token")
-async def validateToken(token):
+@router.post("/validate-token/{token}")
+async def validateToken(token: str):
+    print(token)
     rersult = validateVerificationToken(token)
     return rersult

@@ -34,10 +34,10 @@ def sendVerificationCode():
     except Exception as error:
         raise HTTPException(status_code=500, detail=str(error)) from error
 
-def validateVerificationToken(token):
+def validateVerificationToken(token: str):
     # Aqui obtenemos al usuairo usando correo
     # Obtener desde bd pero harcodeado para la prueba
-    hashedToken = '$2b$12$POFLRAAIKqq.QtgtodfPg.bwK2QxvFPPnZAFDwtp20Kcach82ScKG'
+    hashedToken = '$2b$12$e12bfoK37kdNhWQYUhuI1O3px3aGV8K/rXj.bJ7USOWyUTBjYSq.O'
     is_valid = pwd_context.verify(
         token,
         hashedToken
