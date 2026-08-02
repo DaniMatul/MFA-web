@@ -6,15 +6,18 @@
     height: 100%;
     margin: 0 20px;
 }
-.img-container{
-    width: 60%;
-    margin:  0 0 0 80px;
-}
 
 img{
-    width: 250px;
+    width: 280px;
 }
 
-.inputs-container{
+input, button{
     width: 80%;
+    height: 35px;
+}
+input{
+    border: 1px solid rgba(175, 146, 108, 0.584);
+    border-radius: 10px;
+    padding: 0 10px;
+    background-color: rgba(245, 231, 219, 0.171);
 }

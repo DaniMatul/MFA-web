@@ -1,0 +1,25 @@
+.register-general-container{
+    width: 100%;
+    display: inherit;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    height: 100%;
+    margin: 0 20px;
+}
+
+.register-inputs-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 50%;
+}
+
+.accept-btn{
+    border: none;
+    background-color: rgba(74, 43, 25, 0.771);
+    border-radius: 10px;
+    color: bisque;
+}
