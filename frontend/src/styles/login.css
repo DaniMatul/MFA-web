@@ -1,0 +1,43 @@
+.login-general-container{
+    width: 100%;
+    display: inherit;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    height: 100%;
+    margin: 0 20px;
+}
+
+.login-inputs-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 50%;
+}
+
+.accept-btn{
+    border: none;
+    background-color: rgba(74, 43, 25, 0.771);
+    border-radius: 10px;
+    color: bisque;
+}
+
+.other-btn{
+    background-color: rgba(74, 43, 25, 0.106);
+    border: none;
+    border-radius: 10px;
+}
+
+.token-inputs{
+    display: flex;
+    gap: 10px;
+}
+
+.token-inputs input{
+    border-radius: 8px;
+    height: 55px;
+    text-align: center;
+    font-size: 20px;
+}
