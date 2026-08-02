@@ -6,14 +6,21 @@ import asyncpg
 import os
 from dotenv import load_dotenv
 
+from app.users.routes import router as userRouter
+from app.token.routes import router as tokenRouter
+
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-from app.users.routes import router as userRouter
+
 app = FastAPI()
+
 app.include_router(userRouter)
+app.include_router(tokenRouter)
 
 
 async def connect_db():
     return await asyncpg.connect(DATABASE_URL)
+
+
 
