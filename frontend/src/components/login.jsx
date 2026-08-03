@@ -1,10 +1,20 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import '@/styles/login.css'
 import Biometric from '@/components/biometric'
 
+export function routerHandler(router, rol) {
+    if (rol == 1) {
+        router.push('/admin')
+    } else if (rol == 2) {
+        router.push('/client')
+    }
+}
+
 export default function Login({onAction}){
+    const router = useRouter()
     const [step, setStep] = useState(1)
     const [status, setStatus] = useState(0)
     const [i1, setI1] = useState("")
@@ -15,6 +25,7 @@ export default function Login({onAction}){
     const [i6, setI6] = useState("")
     
     const email = 'mayda.matul@gmail.com'
+    const rol = 1
     const sendHandler = async () =>{
         if (step == 2){
             const response = await fetch(`http://localhost:8000/token/send-verification-token/${email}`, {
@@ -111,7 +122,7 @@ export default function Login({onAction}){
                 )}
                 {step == 3 &&(
                     <>
-                    <Biometric email={email} mode="authenticate" onSuccess={() => setStep(1)}/>
+                    <Biometric email={email} mode="authenticate" onSuccess={() => routerHandler(router, rol)}/>
                     </>
                 )}
             </div>

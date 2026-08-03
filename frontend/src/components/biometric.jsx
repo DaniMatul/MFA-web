@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from "next/navigation";
 
 import '@/styles/biometric.css'
 import { createBiometricCredential, getBiometricCredential } from '@/utils/webauthn'

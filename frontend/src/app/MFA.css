@@ -21,3 +21,20 @@ input{
     padding: 0 10px;
     background-color: rgba(245, 231, 219, 0.171);
 }
+
+.general-container{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:#f6e3d4;
+}
+
+.logic-container{
+  width: 900px;
+  height: 400px;
+  background-color: rgb(255, 251, 247);
+  /* box-shadow: 1px 1px 8px rgb(209, 209, 209); */
+  border-radius: 20px;
+}
