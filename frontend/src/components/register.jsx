@@ -3,6 +3,7 @@
 import { useState } from 'react'
 
 import '@/styles/register.css'
+import Biometric from '@/components/biometric'
 
 export default function Register({onAction}){
     const [step, setStep] = useState(1)
@@ -31,6 +32,7 @@ export default function Register({onAction}){
                 {step == 3 &&(
                     <>
                     <input type="text" placeholder='Biometricos'/>
+                    <Biometric email="mayda.matul@gmail.com" mode="register" onSuccess={() => setStep(4)}/>
                     <button className='accept-btn' onClick={() => setStep(4)}>Guardar</button>
                     <button className='other-btn' onClick={() => setStep(1)}>Regresar</button>
                     </>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import '@/styles/login.css'
+import Biometric from '@/components/biometric'
 
 export default function Login({onAction}){
     const [step, setStep] = useState(1)
@@ -110,8 +111,7 @@ export default function Login({onAction}){
                 )}
                 {step == 3 &&(
                     <>
-                    <p>Pon tu huella en el detector</p>
-                    <button className='accept-btn' onClick={() => setStep(1)}>Aceptar</button>
+                    <Biometric email={email} mode="authenticate" onSuccess={() => setStep(1)}/>
                     </>
                 )}
             </div>
