@@ -6,13 +6,13 @@ router = APIRouter(
     tags=["token"]
 )
 
-@router.get("/send-verification-token")
-async def sendSms():
-    rersult = sendVerificationCode()
+@router.get("/send-verification-token/{userEmail}")
+async def sendSms(userEmail: str):
+    rersult = await sendVerificationCode(userEmail)
     return rersult
 
-@router.post("/validate-token/{token}")
-async def validateToken(token: str):
+@router.post("/validate-token/{token}/{userEmail}")
+async def validateToken(token: str, userEmail):
     print(token)
-    rersult = validateVerificationToken(token)
+    rersult = await validateVerificationToken(token, userEmail)
     return rersult
