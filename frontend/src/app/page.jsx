@@ -11,10 +11,14 @@ export default function Home() {
   const [action, setAction] = useState(1)
   return (
     <>
-    <div className="mfa-general-container">
-      {action == 1 &&(<Login onAction={(a)=> setAction(a)}/>)}
-      {action == 2 &&(<Register onAction={(a)=> setAction(a)}/>)}
-    </div>
+    <div className="general-container">
+          <div className="logic-container">
+            <div className="mfa-general-container">
+              {action == 1 &&(<Login onAction={(a)=> setAction(a)}/>)}
+              {action == 2 &&(<Register onAction={(a)=> setAction(a)}/>)}
+            </div>
+          </div>
+        </div>
     </>
   );
 }
