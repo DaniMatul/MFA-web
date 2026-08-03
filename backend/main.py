@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 from app.users.routes import router as userRouter
 from app.token.routes import router as tokenRouter
+from app.biometric.routes import router as biometricRouter
 
 
 load_dotenv()
@@ -32,10 +33,10 @@ app.add_middleware(
 
 app.include_router(userRouter)
 app.include_router(tokenRouter)
+app.include_router(biometricRouter)
 
 
 async def connect_db():
     return await asyncpg.connect(DATABASE_URL)
-
 
 
