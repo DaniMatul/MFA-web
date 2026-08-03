@@ -18,14 +18,22 @@ export default function Register({onAction}){
             <div className="register-inputs-container">
                 {step == 1 &&(
                     <>
-                    <button className='accept-btn'  onClick={() => setStep(2)}>Guardar</button>
+                    <input type="text" id="email" placeholder='Gmail'/>
+                    <button className='accept-btn'
+                      onClick={() =>{ 
+                        setStep(2)
+                        storeEmail(document.getElementById("email").value)
+                        }}>Guardar</button>
                     <button className='other-btn' onClick={() => onAction(1)}>Login</button>
                     </>
                 )}
                 {step == 2 &&(
                     <>
-                    <input type="text" placeholder='Contraseña'/>
-                    <button className='accept-btn' onClick={() => setStep(3)}>Guardar</button>
+                    <input type="password" id="password" placeholder='Contraseña'/>
+                    <button className='accept-btn' onClick={() => {
+                        setStep(3)
+                        console.log(localStorage.getItem("current_email"))
+                        }}>Guardar</button>
                     <button className='other-btn' onClick={() => setStep(1)}>Regresar</button>
                     </>
                 )}
@@ -44,4 +52,8 @@ export default function Register({onAction}){
         </div>
         </>
     )
+}
+
+function storeEmail(email){
+    localStorage.setItem('current_email', email)
 }
