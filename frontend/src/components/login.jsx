@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import '@/styles/login.css'
 
+import Credentials from '@/components/credentials'
+
 export default function Login({onAction}){
     const [step, setStep] = useState(1)
     const [status, setStatus] = useState(0)
@@ -78,11 +80,7 @@ export default function Login({onAction}){
             </div>
             <div className="login-inputs-container">
                 {step == 1 &&(
-                    <>
-                    <input type="text" placeholder='Gmail'/>
-                    <button className='accept-btn' onClick={() => setStep(2)}>Aceptar</button>
-                    <button className='other-btn' onClick={() => onAction(2)}>Registrar</button>
-                    </>
+                    <Credentials setStep={setStep} onAction={onAction} />
                 )}
                 {step == 2 &&(
                     <>
