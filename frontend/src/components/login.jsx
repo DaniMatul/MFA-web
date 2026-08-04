@@ -26,7 +26,7 @@ export default function Login({onAction}){
     const [i5, setI5] = useState("")
     const [i6, setI6] = useState("")
     
-    const email = 'mayda.matul@gmail.com'
+    const [email, setEmail] = useState("")
     const rol = 1
     const sendHandler = async () =>{
         if (step == 2){
@@ -43,8 +43,6 @@ export default function Login({onAction}){
     }, [step])
 
     const stepHandler = async () => {
-        // aque pegar el email del usuaio (albizuri)
-        const email = 'mayda.matul@gmail.com'
         if (step == 1) {
             
         } else if (step == 2){
@@ -92,7 +90,7 @@ export default function Login({onAction}){
             </div>
             <div className="login-inputs-container">
                 {step == 1 &&(
-                    <Credentials setStep={setStep} onAction={onAction} />
+                    <Credentials setStep={setStep} onAction={onAction} setEmail={setEmail} />
                 )}
                 {step == 2 &&(
                     <>
