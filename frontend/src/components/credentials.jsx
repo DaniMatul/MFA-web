@@ -1,10 +1,10 @@
-export default function Credentials({setStep, onAction, setEmail}){
+export default function Credentials({setStep, onAction, setEmail, setRol}){
     return (
         <>
         <input type="text" id="email" placeholder='Email' onBlur={() => {checkEmail()}}        />
         <input type="password" id="password" placeholder='Contraseña'/>
         <button className='accept-btn' onClick={ () =>{
-            checkCredentials(setStep, setEmail)
+            checkCredentials(setStep, setEmail, setRol)
             }}>
                 Aceptar
         </button>
@@ -13,7 +13,7 @@ export default function Credentials({setStep, onAction, setEmail}){
     )
 }
 
-function checkCredentials(setStep, setEmail){
+function checkCredentials(setStep, setEmail, setRol){
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
@@ -22,6 +22,7 @@ function checkCredentials(setStep, setEmail){
             if (data.valid) {
                 sessionStorage.setItem("u_id", data.user_id);
                 setEmail(email)
+                setRol(data.role_id)
                 setStep(2)
             } else {
                 alert("Error al iniciar sesión. Verifica tus credenciales.");

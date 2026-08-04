@@ -27,7 +27,7 @@ export default function Login({onAction}){
     const [i6, setI6] = useState("")
     
     const [email, setEmail] = useState("")
-    const rol = 1
+    const [rol, setRol] = useState(0)
     const sendHandler = async () =>{
         if (step == 2){
             const response = await fetch(`http://localhost:8000/token/send-verification-token/${email}`, {
@@ -90,7 +90,7 @@ export default function Login({onAction}){
             </div>
             <div className="login-inputs-container">
                 {step == 1 &&(
-                    <Credentials setStep={setStep} onAction={onAction} setEmail={setEmail} />
+                    <Credentials setStep={setStep} onAction={onAction} setEmail={setEmail} setRol={setRol} />
                 )}
                 {step == 2 &&(
                     <>
