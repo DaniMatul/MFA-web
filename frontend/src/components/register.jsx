@@ -85,6 +85,12 @@ function store(value, key){
 }
 
 async function saveUser(email, password, setStep){
+    const passwordError = validatePassword(password)
+    if (passwordError){
+        alert(passwordError)
+        return
+    }
+
     const body = {
         email: email,
         password: password
@@ -106,6 +112,20 @@ async function saveUser(email, password, setStep){
         setStep(1)
     }
 
+}
+
+function validatePassword(password){
+    if (password.length < 8)
+        return "La contraseña debe tener al menos 8 caracteres"
+    if (!/[A-Z]/.test(password))
+        return "La contraseña debe incluir una letra mayúscula"
+    if (!/[a-z]/.test(password))
+        return "La contraseña debe incluir una letra minúscula"
+    if (!/[0-9]/.test(password))
+        return "La contraseña debe incluir un número"
+    if (!/[^A-Za-z0-9]/.test(password))
+        return "La contraseña debe incluir un carácter especial"
+    return null
 }
 
 async function getRoles(){

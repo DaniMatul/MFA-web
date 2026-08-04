@@ -5,7 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import asyncpg
 import os
+import re
 from dotenv import load_dotenv
+from passlib.context import CryptContext
 
 from app.users.routes import router as userRouter
 from app.token.routes import router as tokenRouter
@@ -16,6 +18,24 @@ from app.utils.models import User
 
 load_dotenv()
 app = FastAPI()
+
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto"
+)
+
+def validatePassword(password):
+    if not password or len(password) < 8:
+        return "La contraseña debe tener al menos 8 caracteres"
+    if not re.search(r"[A-Z]", password):
+        return "La contraseña debe incluir una letra mayúscula"
+    if not re.search(r"[a-z]", password):
+        return "La contraseña debe incluir una letra minúscula"
+    if not re.search(r"[0-9]", password):
+        return "La contraseña debe incluir un número"
+    if not re.search(r"[^A-Za-z0-9]", password):
+        return "La contraseña debe incluir un carácter especial"
+    return None
 
 origins = [
     "http://localhost:3000",
@@ -41,18 +61,25 @@ async def check_email(email: str):
     conn = await connect_db()
     query = "SELECT * FROM \"User\" WHERE email = $1"
     result = await conn.fetchrow(query, email)
-    await disconnect_db()
+    await conn.close()
     return {"exists": result is not None}
 
 @app.post("/user/register")
 async def create_user(user: User):
+    passwordError = validatePassword(user.password)
+    if passwordError:
+        return {"status": "error", "message": passwordError}
+
+    # Hasheamos la contraseña
+    hashedPassword = pwd_context.hash(user.password)
+
     conn = await connect_db()
     query = "INSERT INTO \"User\" (email, password) VALUES ($1, $2)"
     status = "error"
     data = "Failed to create user"
 
     try:
-        result = await conn.execute(query, user.email, user.password)
+        result = await conn.execute(query, user.email, hashedPassword)
     except asyncpg.exceptions.UniqueViolationError:
         status = "error"
         data = "Correo ya registrado"
@@ -62,19 +89,28 @@ async def create_user(user: User):
             status = "success"
             data = result["id"]
     finally:
-        await disconnect_db()
+        await conn.close()
     
     return {"status": status, "message": data}
 
 @app.post("/user/login/")
 async def login_user(user: User):
-    print(user.email, user.password)
     conn = await connect_db()
-    query = "SELECT * FROM \"User\" WHERE email = $1 AND password = $2"
-    result = await conn.fetchrow(query, user.email, user.password)
-    await disconnect_db()
-    
-    if result is not None:
+    query = "SELECT * FROM \"User\" WHERE email = $1"
+    result = await conn.fetchrow(query, user.email)
+    await conn.close()
+
+    is_valid = False
+    if result is not None and user.password:
+        try:
+            is_valid = pwd_context.verify(
+                user.password,
+                result["password"]
+            )
+        except ValueError:
+            is_valid = False
+
+    if is_valid:
         return {"valid": True, "user_id": result["id"]}
     return {"valid": False}
 
@@ -85,7 +121,7 @@ async def update_user_role(user:User):
     result = await conn.execute(query, user.role_id, user.email)
     print(user.role_id, user.email)
     print(result)
-    await disconnect_db()
+    await conn.close()
     
     return {"status" : (result and result[-1] == "1")}
 
@@ -94,6 +130,6 @@ async def get_roles():
     conn = await connect_db()
     query = "SELECT * FROM \"Role\""
     result = await conn.fetch(query)
-    await disconnect_db()
+    await conn.close()
     print(result)
     return {"roles": result}

@@ -27,17 +27,16 @@ async def sendVerificationCode(userEmail):
         hashedToken = pwd_context.hash(token)
 
         #Guardamos token en bd 
-        # saveToken = await db.execute(
-        #     """
-        #     INSERT INTO "Sms_token"(user_id, code, used, tries, status)
-        #     VALUES($1, $2, $3, $4, $5)
-        #     """,
-        #     userId, hashedToken, False, 0, 1
-        # )
+        saveToken = await db.execute(
+            """
+            INSERT INTO "Sms_token"(user_id, code, used, tries, status)
+            VALUES($1, $2, $3, $4, $5)
+            """,
+            userId, hashedToken, False, 0, 1
+        )
 
         # Enviamos token al servicio
-        #email = sendEmail(userEmail, token)
-        email = 'esta comentado bd y correo'
+        email = sendEmail(userEmail, token)
         await db.close()
         return {"message": "Verification code sent", "email": email}
 
