@@ -11,7 +11,7 @@ async def connect_db():
     global connection
     if not DATABASE_URL:
         raise ValueError("DATABASE_URL is not set in the environment variables.")
-    if not connection:
+    if not connection or connection.is_closed():
         connection = await asyncpg.connect(DATABASE_URL)
     return connection
 
